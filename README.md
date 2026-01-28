@@ -1,26 +1,66 @@
-<<<<<<< HEAD
-# Lens_Chain_Visualizer
-=======
 # Lens Chain Visualizer
 
-An interactive Python application that visualizes the effect of changing focal lengths in a series of three lenses, using a live webcam feed.
+An interactive Python application that visualizes the effect of changing focal lengths in a series of three lenses, utilizing a live webcam feed to simulate an optical bench.
 
-## Features
-- Real-time webcam feed processing.
-- Simulation of 3 consecutive thin lenses.
-- Adjustable focal lengths via sliders.
-- Visual feedback on "retinal" image quality (Blur & Zoom).
-- Optical bench visualization overlay.
+## 🚀 Features
+- **Real-time Simulation**: Processes webcam feed instantly to show optical effects.
+- **Three-Lens System**: Simulate a chain of 3 thin lenses in series.
+- **Interactive Controls**: Adjust focal lengths ($f_1, f_2, f_3$) dynamically via sliders.
+- **Visual Feedback**:
+    - **Defocus Blur**: Simulates the circle of confusion when the system is out of focus.
+    - **Magnification/Zoom**: Simulates the change in effective focal length.
+- **Optical Bench Overlay**: Visualizes the lenses (convex/concave) and the optical axis.
 
-## Requirements
-- Python 3.x
-- OpenCV (`numpy`, `opencv-python`)
+## 📦 Installation
 
-## Usage
-Run the main script:
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/Amish-03/Lens_Chain_Visualizer.git
+   cd Lens_Chain_Visualizer
+   ```
+
+2. **Install Dependencies**
+   Ensure you have Python installed. Then install the required libraries:
+   ```bash
+   pip install opencv-python numpy
+   ```
+
+## 🎮 Usage
+
+Run the main application script:
 ```bash
 python main.py
 ```
-- Controls window: Adjust sliders for Lens 1, 2, and 3.
-- Main window: View the simulation. Press 'q' to quit.
->>>>>>> 7178d76 (Initial commit: Interactive Lens Simulation)
+
+- **Controls Window**:
+    - Use trackbars to adjust the focal length of Lens 1, Lens 2, and Lens 3.
+    - Range: -300mm to +300mm.
+    - *Note*: Setting a slider to the middle (0 position) represents a "Planar" lens (infinite focal length, no power).
+- **Main Window**:
+    - Displays the processed video feed.
+    - Bottom overlay shows current statistics and focus status.
+    - Press **'q'** to exit the application.
+
+## 💡 How It Works
+
+This simulation uses the **Thin Lens Approximation** and **Gaussian Optics**.
+
+### 1. Effective Focal Length
+For multiple thin lenses in close contact (or treated as a combined system), the effective power $P_{eff}$ is the sum of individual powers:
+$$ P_{eff} = P_1 + P_2 + P_3 $$
+$$ \frac{1}{f_{eff}} \approx \frac{1}{f_1} + \frac{1}{f_2} + \frac{1}{f_3} $$
+
+### 2. Image Transformation
+The application treats the webcam feed as the "ideal" projected image and applies transformations based on the calculated $f_{eff}$ relative to a "Target Focal Length" ($f_{target}$):
+
+- **Focus (Blur)**:
+  - If $f_{eff} \approx f_{target}$, the image is sharp.
+  - Deviation from $f_{target}$ increases the blur radius, simulating defocus.
+  - High deviation = Strong Gaussian Blur.
+
+- **Magnification (Zoom)**:
+  - Scale factor $\approx f_{eff} / f_{target}$.
+  - Higher effective focal length = Higher Magnification (Zoom In).
+  - Lower effective focal length = Lower Magnification (Zoom Out).
+
+This provides an intuitive, qualitative visualization of how lens combinations affect image formation, akin to correcting refractive errors in the human eye.
