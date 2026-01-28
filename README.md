@@ -5,7 +5,7 @@ An interactive Python application that visualizes the effect of changing focal l
 ## 🚀 Features
 - **Real-time Simulation**: Processes webcam feed instantly to show optical effects.
 - **Three-Lens System**: Simulate a chain of 3 thin lenses in series.
-- **Interactive Controls**: Adjust focal lengths ($f_1, f_2, f_3$) dynamically via sliders.
+- **Interactive Controls**: Adjust focal lengths (`f1`, `f2`, `f3`) dynamically via sliders.
 - **Visual Feedback**:
     - **Defocus Blur**: Simulates the circle of confusion when the system is out of focus.
     - **Magnification/Zoom**: Simulates the change in effective focal length.
@@ -47,19 +47,24 @@ This simulation uses the **Thin Lens Approximation** and **Gaussian Optics**.
 
 ### 1. Effective Focal Length
 For multiple thin lenses in close contact (or treated as a combined system), the effective power $P_{eff}$ is the sum of individual powers:
-$$ P_{eff} = P_1 + P_2 + P_3 $$
-$$ \frac{1}{f_{eff}} \approx \frac{1}{f_1} + \frac{1}{f_2} + \frac{1}{f_3} $$
+
+```math
+P_{eff} = P_1 + P_2 + P_3
+```
+```math
+1/f_{eff} = 1/f_1 + 1/f_2 + 1/f_3
+```
 
 ### 2. Image Transformation
 The application treats the webcam feed as the "ideal" projected image and applies transformations based on the calculated $f_{eff}$ relative to a "Target Focal Length" ($f_{target}$):
 
 - **Focus (Blur)**:
-  - If $f_{eff} \approx f_{target}$, the image is sharp.
-  - Deviation from $f_{target}$ increases the blur radius, simulating defocus.
+  - If `f_eff` is close to `f_target`, the image is sharp.
+  - Deviation from `f_target` increases the blur radius, simulating defocus.
   - High deviation = Strong Gaussian Blur.
 
 - **Magnification (Zoom)**:
-  - Scale factor $\approx f_{eff} / f_{target}$.
+  - Scale factor roughly equals `f_eff / f_target`.
   - Higher effective focal length = Higher Magnification (Zoom In).
   - Lower effective focal length = Lower Magnification (Zoom Out).
 
